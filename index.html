@@ -1,13 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fantastic-beings</title>
+    <title>Fantastic Beings</title>
   </head>
   <body>
-    <div id="app"></div>
+    <main id="board">
+      <header id="status-bar" role="status" aria-live="polite"></header>
+
+      <section class="game-area" aria-label="Игровое поле">
+        <table id="map" role="grid">
+          <tr>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+          </tr>
+          <tr>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+          </tr>
+          <tr>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+          </tr>
+          <tr>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+          </tr>
+          <tr>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+            <td class="cell" role="gridcell"></td>
+          </tr>
+        </table>
+      </section>
+    </main>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
