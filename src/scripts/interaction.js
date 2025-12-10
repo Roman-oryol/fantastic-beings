@@ -1,5 +1,9 @@
 import { getCoords, swapBeings } from './swap.js';
-import { mapState, updateMapStateAfterSwap } from './state.js';
+import {
+  mapState,
+  updateMapStateAfterMatch,
+  updateMapStateAfterSwap,
+} from './state.js';
 import { checkMatches, matchesToCoords, clearMatches } from './match.js';
 import { redrawMap } from './map.js';
 import { creatures } from './config.js';
@@ -10,14 +14,40 @@ import {
   clearSelectedCell,
 } from './selection.js';
 
+let isProcessing = false;
+
+function delay(ms) {
+  return new Promise((res) => setTimeout(res, ms));
+}
+
+async function resolveAllMatches() {
+  let matches = matchesToCoords(checkMatches());
+
+  while (matches.length > 0) {
+    redrawMap(mapState, creatures);
+    await delay(500);
+
+    clearMatches(matches);
+
+    redrawMap(mapState, creatures);
+    await delay(500);
+
+    updateMapStateAfterMatch();
+    redrawMap(mapState, creatures);
+
+    await delay(200);
+    matches = matchesToCoords(checkMatches());
+  }
+}
+
 function initGame(rows, cols) {
   const mapEl = document.getElementById('map');
-  const matches = matchesToCoords(checkMatches());
 
-  clearMatches(matches);
-  redrawMap(mapState, creatures);
+  resolveAllMatches();
 
-  mapEl.addEventListener('click', (e) => {
+  mapEl.addEventListener('click', async (e) => {
+    if (isProcessing) return;
+
     const target = e.target.closest('.cell');
     if (!target) return;
 
@@ -34,27 +64,29 @@ function initGame(rows, cols) {
       ([nx, ny]) => nx === x && ny === y
     );
 
-    if (isNeighbor) {
+    if (!isNeighbor) {
+      setSelectedCell(target, x, y, rows, cols);
+      return;
+    }
+
+    isProcessing = true;
+
+    swapBeings(selectedCell.element, target, creatures);
+    updateMapStateAfterSwap(x, y, selectedCell.x, selectedCell.y);
+
+    let matches = matchesToCoords(checkMatches());
+    if (matches.length > 0) {
+      await delay(200);
+      await resolveAllMatches();
+      clearSelectedCell();
+    } else {
+      await delay(200);
       swapBeings(selectedCell.element, target, creatures);
       updateMapStateAfterSwap(x, y, selectedCell.x, selectedCell.y);
-
-      const matches = matchesToCoords(checkMatches());
-      if (matches.length > 0) {
-        setTimeout(() => {
-          clearMatches(matches);
-          redrawMap(mapState, creatures);
-          clearSelectedCell();
-        }, 300);
-      } else {
-        setTimeout(() => {
-          swapBeings(selectedCell.element, target, creatures);
-          updateMapStateAfterSwap(x, y, selectedCell.x, selectedCell.y);
-          clearSelectedCell();
-        }, 200);
-      }
-    } else {
-      setSelectedCell(target, x, y, rows, cols);
+      clearSelectedCell();
     }
+
+    isProcessing = false;
   });
 }
 

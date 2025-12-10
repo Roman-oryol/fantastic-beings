@@ -1,3 +1,5 @@
+import { generateRandomBeingName } from './config';
+
 const mapState = [];
 
 function fillMapState() {
@@ -17,4 +19,19 @@ function updateMapStateAfterSwap(x1, y1, x2, y2) {
   mapState[y2][x2] = temp;
 }
 
-export { mapState, fillMapState, updateMapStateAfterSwap };
+function updateMapStateAfterMatch() {
+  mapState.forEach((row) => {
+    row.forEach((cell, index) => {
+      if (cell === '') {
+        row[index] = generateRandomBeingName();
+      }
+    });
+  });
+}
+
+export {
+  mapState,
+  fillMapState,
+  updateMapStateAfterSwap,
+  updateMapStateAfterMatch,
+};

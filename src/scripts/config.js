@@ -15,4 +15,10 @@ const creatures = [
 const rows = 5;
 const cols = 5;
 
-export { creatures, rows, cols };
+function generateRandomBeingName() {
+  const randomIndex = Math.floor(Math.random() * creatures.length);
+
+  return creatures[randomIndex].name;
+}
+
+export { creatures, rows, cols, generateRandomBeingName };
