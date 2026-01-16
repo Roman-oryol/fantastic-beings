@@ -3,6 +3,10 @@ import {
   mapState,
   updateMapStateAfterMatch,
   updateMapStateAfterSwap,
+  incrementMoves,
+  addScore,
+  collectBeing,
+  isGameOver,
 } from './state.js';
 import { checkMatches, matchesToCoords, clearMatches } from './match.js';
 import { redrawMap } from './map.js';
@@ -13,6 +17,8 @@ import {
   setSelectedCell,
   clearSelectedCell,
 } from './selection.js';
+
+const POINTS_PER_BEING = 10;
 
 let isProcessing = false;
 
@@ -27,7 +33,17 @@ async function resolveAllMatches() {
     redrawMap(mapState, creatures);
     await delay(500);
 
-    clearMatches(matches);
+    const collected = clearMatches(matches);
+    const points = Object.values(collected).reduce(
+      (sum, count) => sum + count * POINTS_PER_BEING,
+      0
+    );
+    addScore(points);
+    Object.entries(collected).forEach(([being, count]) => {
+      for (let i = 0; i < count; i++) {
+        collectBeing(being);
+      }
+    });
 
     redrawMap(mapState, creatures);
     await delay(500);
@@ -46,7 +62,7 @@ function initGame(rows, cols) {
   resolveAllMatches();
 
   mapEl.addEventListener('click', async (e) => {
-    if (isProcessing) return;
+    if (isProcessing || isGameOver()) return;
 
     const target = e.target.closest('.cell');
     if (!target) return;
@@ -76,6 +92,7 @@ function initGame(rows, cols) {
 
     let matches = matchesToCoords(checkMatches());
     if (matches.length > 0) {
+      incrementMoves();
       await delay(200);
       await resolveAllMatches();
       clearSelectedCell();

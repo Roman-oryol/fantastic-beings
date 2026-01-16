@@ -47,7 +47,15 @@ function matchesToCoords(matches) {
 }
 
 function clearMatches(coords) {
-  coords.forEach(([x, y]) => (mapState[y][x] = ''));
+  const collected = {};
+  coords.forEach(([x, y]) => {
+    const being = mapState[y][x];
+    if (being) {
+      collected[being] = (collected[being] || 0) + 1;
+    }
+    mapState[y][x] = '';
+  });
+  return collected;
 }
 
 export { checkMatches, matchesToCoords, clearMatches };

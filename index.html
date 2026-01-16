@@ -2,13 +2,48 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Marmelad&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <title>Fantastic Beings</title>
   </head>
   <body>
     <main id="board">
-      <header id="status-bar"></header>
+      <header id="status-bar">
+        <div id="beings-for-win">
+          <div class="being-counter">
+            <img
+              src="./src/images/beings/zouwu.png"
+              alt="zouwu"
+              width="70"
+              height="70"
+            />
+            <span class="zouwu">3</span>
+          </div>
+          <div class="being-counter">
+            <img
+              src="./src/images/beings/kelpie.png"
+              alt="kelpie"
+              width="70"
+              height="70"
+            />
+            <span class="kelpie">0</span>
+          </div>
+        </div>
+        <div class="stat-moves">
+          <span class="stat-label">Ходов</span>
+          <span id="moves-value" class="stat-value">0</span>
+        </div>
+        <div class="stat-score">
+          <span class="stat-label">Очки: </span>
+          <span id="score-value" class="stat-value">90</span>
+        </div>
+      </header>
 
       <section class="game-area">
         <table id="map"></table>

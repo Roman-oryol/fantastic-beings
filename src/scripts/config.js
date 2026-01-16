@@ -15,10 +15,17 @@ const creatures = [
 const rows = 5;
 const cols = 5;
 
+const gameGoals = {
+  zouwu: 6,
+  kelpie: 6,
+};
+
+const maxMoves = 10;
+
 function generateRandomBeingName() {
   const randomIndex = Math.floor(Math.random() * creatures.length);
 
   return creatures[randomIndex].name;
 }
 
-export { creatures, rows, cols, generateRandomBeingName };
+export { creatures, rows, cols, gameGoals, maxMoves, generateRandomBeingName };
