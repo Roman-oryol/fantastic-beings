@@ -65,6 +65,11 @@ function updateBeingCounter(beingName) {
   if (counterEl) counterEl.textContent = remainingGoals[beingName];
 }
 
+function updateGameMessage(message) {
+  const messageEl = document.querySelector('#game-message p');
+  if (messageEl) messageEl.textContent = message;
+}
+
 function initGameState() {
   updateMovesDisplay();
   updateScoreDisplay();
@@ -78,6 +83,20 @@ function isGameOver() {
   );
 }
 
+function isWin() {
+  return (
+    Object.values(remainingGoals).every((count) => count <= 0) &&
+    currentMoves <= maxMoves
+  );
+}
+
+function isLose() {
+  return (
+    currentMoves >= maxMoves &&
+    !Object.values(remainingGoals).every((count) => count <= 0)
+  );
+}
+
 export {
   mapState,
   fillMapState,
@@ -88,6 +107,9 @@ export {
   collectBeing,
   initGameState,
   isGameOver,
+  isWin,
+  isLose,
+  updateGameMessage,
   currentMoves,
   currentScore,
   remainingGoals,

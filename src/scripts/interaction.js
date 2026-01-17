@@ -7,6 +7,9 @@ import {
   addScore,
   collectBeing,
   isGameOver,
+  isWin,
+  isLose,
+  updateGameMessage,
 } from './state.js';
 import { checkMatches, matchesToCoords, clearMatches } from './match.js';
 import { redrawMap } from './map.js';
@@ -36,7 +39,7 @@ async function resolveAllMatches() {
     const collected = clearMatches(matches);
     const points = Object.values(collected).reduce(
       (sum, count) => sum + count * POINTS_PER_BEING,
-      0
+      0,
     );
     addScore(points);
     Object.entries(collected).forEach(([being, count]) => {
@@ -77,7 +80,7 @@ function initGame(rows, cols) {
     if (target === selectedCell.element) return;
 
     const isNeighbor = selectedCell.neighbors.some(
-      ([nx, ny]) => nx === x && ny === y
+      ([nx, ny]) => nx === x && ny === y,
     );
 
     if (!isNeighbor) {
@@ -95,6 +98,15 @@ function initGame(rows, cols) {
       incrementMoves();
       await delay(200);
       await resolveAllMatches();
+      if (isWin()) {
+        updateGameMessage(
+          'Вы выиграли! Перезагрузите страницу, чтобы начать игру снова.',
+        );
+      } else if (isLose()) {
+        updateGameMessage(
+          'Вы проиграли! Перезагрузите страницу, чтобы начать игру снова.',
+        );
+      }
       clearSelectedCell();
     } else {
       await delay(200);

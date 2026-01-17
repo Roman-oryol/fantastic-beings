@@ -16,11 +16,11 @@ const rows = 5;
 const cols = 5;
 
 const gameGoals = {
-  zouwu: 6,
-  kelpie: 6,
+  zouwu: 3,
+  kelpie: 3,
 };
 
-const maxMoves = 10;
+const maxMoves = 2;
 
 function generateRandomBeingName() {
   const randomIndex = Math.floor(Math.random() * creatures.length);
