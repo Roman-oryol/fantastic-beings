@@ -3,6 +3,8 @@ import swooping from '../images/beings/swooping.png';
 import salamander from '../images/beings/salamander.png';
 import puffskein from '../images/beings/puffskein.png';
 import kelpie from '../images/beings/kelpie.png';
+import clickAudio from '../audio/click.wav';
+import matchAudio from '../audio/match.wav';
 
 const creatures = [
   { name: 'zouwu', image: zouwu },
@@ -16,11 +18,11 @@ const rows = 5;
 const cols = 5;
 
 const gameGoals = {
-  zouwu: 3,
-  kelpie: 3,
+  zouwu: 12,
+  kelpie: 12,
 };
 
-const maxMoves = 2;
+const maxMoves = 15;
 
 function generateRandomBeingName() {
   const randomIndex = Math.floor(Math.random() * creatures.length);
@@ -28,4 +30,17 @@ function generateRandomBeingName() {
   return creatures[randomIndex].name;
 }
 
-export { creatures, rows, cols, gameGoals, maxMoves, generateRandomBeingName };
+const clickSound = new Audio(clickAudio);
+const matchSound = new Audio(matchAudio);
+matchSound.volume = 0.1;
+
+export {
+  creatures,
+  rows,
+  cols,
+  gameGoals,
+  maxMoves,
+  generateRandomBeingName,
+  clickSound,
+  matchSound,
+};

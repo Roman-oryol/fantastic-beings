@@ -33,7 +33,7 @@ function fillMapRandomly() {
           creatures[Math.floor(Math.random() * creatures.length)],
           cell,
           cellIndex,
-          rowIndex
+          rowIndex,
         );
     });
   });

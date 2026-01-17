@@ -134,6 +134,11 @@
     width: 90%;
     height: 90%;
     object-fit: cover;
+    transition: transform 0.5s;
+  }
+
+  &:hover img {
+    transform: translate(-50%, -50%) scale(1.1);
   }
 }
 
@@ -158,4 +163,35 @@
     font-size: clamp(1.5rem, 2.5vw, 2.5vw);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
+}
+
+@keyframes explosion {
+  0% {
+    content: url('./images/animation/frame_0_delay-0.07s.png');
+  }
+  14.5% {
+    content: url('./images/animation/frame_1_delay-0.07s.png');
+  }
+  29% {
+    content: url('./images/animation/frame_2_delay-0.07s.png');
+  }
+  43.5% {
+    content: url('./images/animation/frame_3_delay-0.07s.png');
+  }
+  58% {
+    content: url('./images/animation/frame_4_delay-0.07s.png');
+  }
+  72.5% {
+    content: url('./images/animation/frame_5_delay-0.07s.png');
+  }
+  87% {
+    content: url('./images/animation/frame_6_delay-0.07s.png');
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.cell img.exploding {
+  animation: explosion 800ms steps(1) forwards;
 }
